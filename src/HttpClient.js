@@ -10,7 +10,7 @@ HttpClient.prototype.makeRequest = function(data, onCompletion, ui, game) {
           dataType: "json",
           data: data,
           success: function(response) {
-            onCompletion(response, ui, game)
+            onCompletion(response, game, ui)
           },
           error: function() {
             HttpClient.prototype.makeRequest(data, onCompletion, ui, game);

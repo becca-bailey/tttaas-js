@@ -21,3 +21,11 @@ UI.prototype.enableSpots = function(board) {
     }
   })
 }
+
+UI.prototype.displayWinner = function(winner) {
+  $("#turn-label").html(winner + " wins!!");
+}
+
+UI.prototype.displayTie = function() {
+  $("#turn-label").html("It's a tie!!");
+}
