@@ -18,3 +18,16 @@ td.grid_3 {
   width: 100px;
   height: 100px;
 }
+
+.game-view {
+  text-align: center;
+}
+
+#board {
+  margin: 0 auto;
+}
+
+td {
+  font-size: 3em;
+  font-family: "Playfair Display", serif;
+}
