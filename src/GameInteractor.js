@@ -7,11 +7,13 @@ function GameInteractor(ui, game, client) {
 GameInteractor.prototype.makeMove = function(spotId) {
   this.displayMove(spotId)
   var data = this.getGameAsJSON();
+  this.ui.displayComputerTurn();
   this.httpClient.makeRequest(data, GameInteractor.prototype.endTurn, this.ui, this.game);
 }
 
 GameInteractor.prototype.displayMove = function(spotId) {
   this.ui.disableSpots(this.game.board);
+  this.ui.disableResetButton();
   this.game.setSpotToMarker(spotId, "X");
   this.ui.showBoard(this.game.board);
 }
@@ -22,9 +24,12 @@ GameInteractor.prototype.endTurn = function(response, game, ui) {
   this.game.board = response.board;
   this.game.status = response.status;
   this.ui.enableSpots(this.game.board);
+  this.ui.enableResetButton();
   this.ui.showBoard(this.game.board);
   if (this.game.status != "in progress") {
     GameInteractor.prototype.endGame(game, ui);
+  } else {
+    this.ui.displayHumanTurn();
   }
 }
 
@@ -49,4 +54,9 @@ GameInteractor.prototype.getWinner = function(status) {
 
 GameInteractor.prototype.getGameAsJSON = function() {
   return "{\"board\": " + JSON.stringify(this.game.board) + ", \"gameType\": \"humanVsComputer\"}"
+}
+
+GameInteractor.prototype.resetGame = function() {
+  this.ui.clearBoard(this.game.board)
+  this.game.resetBoard();
 }

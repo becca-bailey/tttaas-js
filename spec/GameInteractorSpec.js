@@ -38,6 +38,11 @@ describe("GameInteractor", function() {
       interactor.displayMove(3);
       expect(mockUI.shownBoard).toEqual(["","","","X","","","","",""]);
     });
+
+    it("disables the reset button", function() {
+      interactor.displayMove(0);
+      expect(mockUI.buttonEnabled).toBe(false);
+    })
   });
 
   describe("endTurn", function() {
@@ -60,6 +65,10 @@ describe("GameInteractor", function() {
     it("can show the updated board in the UI", function() {
       expect(mockUI.shownBoard).toEqual(mockResponse.board);
     });
+
+    it("enables the reset game button", function() {
+      expect(mockUI.buttonEnabled).toBe(true);
+    })
   });
 
   describe("endGame", function() {
@@ -72,19 +81,19 @@ describe("GameInteractor", function() {
     it ("can update the winner message if the game is over and X wins", function() {
       mockResponse = new MockResponse(["X","O","","X","","O","X","",""], "player1Wins");
       interactor.endTurn(mockResponse, game, mockUI);
-      expect(mockUI.winnerText).toBe("X wins!!");
+      expect(mockUI.statusText).toBe("X wins!!");
     });
 
     it ("can update the winner message if the game is over and O wins", function() {
       mockResponse = new MockResponse(["X","O","","X","","O","X","",""], "player2Wins");
       interactor.endTurn(mockResponse, game, mockUI);
-      expect(mockUI.winnerText).toBe("O wins!!");
+      expect(mockUI.statusText).toBe("O wins!!");
     });
 
     it ("can update the status if there is a tie", function() {
       mockResponse = new MockResponse(["X", "X", "O", "O", "X", "O", "O", "X", "X"], "tie");
       interactor.endTurn(mockResponse, game, mockUI);
-      expect(mockUI.winnerText).toEqual("It's a tie!!");
+      expect(mockUI.statusText).toEqual("It's a tie!!");
     });
   });
 
@@ -103,5 +112,14 @@ describe("GameInteractor", function() {
       var expectedBoard = ["","","","","","","","",""];
       expect(interactor.getGameAsJSON()).toEqual("{\"board\": " + JSON.stringify(expectedBoard) + ", \"gameType\": \"humanVsComputer\"}");
     });
+  });
+
+  describe("resetGame", function() {
+    it ("can reset the board and the UI", function() {
+      var expectedBoard = ["","","","","","","","",""];
+      interactor.makeMove(0);
+      interactor.resetGame();
+      expect(interactor.game.board).toEqual(expectedBoard);
+    })
   });
 });

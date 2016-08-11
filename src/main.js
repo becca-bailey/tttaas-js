@@ -6,4 +6,7 @@ $(document).ready(function() {
       interactor.makeMove(id);
     }
   });
+  $("#play-again").on("click", function() {
+    interactor.resetGame();
+  });
 });

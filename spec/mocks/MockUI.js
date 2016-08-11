@@ -1,6 +1,7 @@
 function MockUI() {
   this.spotsEnabled = true;
-  this.winnerText = "";
+  this.buttonEnabled = true;
+  this.statusText = "";
   this.shownBoard = ["","","","","","","","",""];
 }
 
@@ -17,9 +18,29 @@ MockUI.prototype.enableSpots = function(board) {
 }
 
 MockUI.prototype.displayWinner = function(winner) {
-  this.winnerText = winner + " wins!!";
+  this.statusText = winner + " wins!!";
 }
 
 MockUI.prototype.displayTie = function() {
-  this.winnerText = "It's a tie!!";
+  this.statusText = "It's a tie!!";
+}
+
+MockUI.prototype.displayHumanTurn = function() {
+  this.statusText = "Your turn!";
+}
+
+MockUI.prototype.displayComputerTurn = function() {
+  this.statusText = "Computer is thinking...";
+}
+
+MockUI.prototype.disableResetButton = function() {
+  this.buttonEnabled = false;
+}
+
+MockUI.prototype.enableResetButton = function() {
+  this.buttonEnabled = true;
+}
+
+MockUI.prototype.clearBoard = function() {
+  this.shownBoard = ["","","","","","","","",""];
 }
