@@ -10,11 +10,12 @@ body {
 }
 
 h1 {
-  font: 4em "Playfair Display", serif;
+  font: 3em "Playfair Display", serif;
+  color: #336E7B;
 }
 
 h2 {
-  font: 3em Lato, sans-serif;
+  font: 2em Lato, sans-serif;
 }
 
 .game-view {
@@ -31,9 +32,10 @@ td {
 }
 
 td.grid_3 {
-  border: 1px solid black !important;
   width: 100px;
   height: 100px;
+  background-color: #ECECEC;
+  margin: 2em;
 }
 
 .game-view {
@@ -47,4 +49,8 @@ td.grid_3 {
 td {
   font-size: 3em;
   font-family: "Playfair Display", serif;
+}
+
+.human-move {
+  color: #336E7B;
 }
