@@ -9,6 +9,31 @@ body {
   background-color: #D2D7D3;
 }
 
+#board>.row {
+  margin-bottom: 0;
+}
+
+.spot {
+  font-size: 4em;
+  text-align: center;
+}
+
+.top {
+  border-bottom: 2px solid black;
+}
+
+.bottom {
+  border-top: 2px solid black;
+}
+
+.left {
+  border-right: 2px solid black;
+}
+
+.right {
+  border-left: 2px solid black;
+}
+
 h1 {
   font: 3em "Playfair Display", serif;
   color: #336E7B;
@@ -24,31 +49,7 @@ h2 {
 
 #board {
   margin: 0 auto;
-}
-
-td {
-  font-size: 3em;
-  font-family: "Playfair Display", serif;
-}
-
-td.grid_3 {
-  width: 100px;
-  height: 100px;
-  background-color: #ECECEC;
-  margin: 2em;
-}
-
-.game-view {
-  text-align: center;
-}
-
-#board {
-  margin: 0 auto;
-}
-
-td {
-  font-size: 3em;
-  font-family: "Playfair Display", serif;
+  width: 50%;
 }
 
 .human-move {

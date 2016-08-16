@@ -1,7 +1,34 @@
+// $(document).ready(function() {
+//   $(".spot").on("click", function() {
+//     alert("spot clicked")
+//     if ($(this).hasClass("enabled")) {
+//       id = parseInt($(this).attr("id"));
+//       interactor.makeMove(id);
+//     }
+//   });
+//   $("#play-again").on("click", function() {
+//     interactor.resetGame();
+//   });
+// });
+
 function GameInteractor(ui, game, client) {
   this.ui = ui;
   this.game = game;
   this.httpClient = client;
+}
+
+GameInteractor.prototype.startGame = function() {
+  $(document).ready(function() {
+    $(".spot").on("click", function() {
+      if ($(this).hasClass("enabled")) {
+        id = parseInt($(this).attr("id"));
+        this.makeMove(id);
+      }
+    });
+    $("#play-again").on("click", function() {
+      this.resetGame();
+    });
+  });
 }
 
 GameInteractor.prototype.makeMove = function(spotId) {
@@ -16,11 +43,13 @@ GameInteractor.prototype.displayMove = function(spotId) {
   this.ui.disableResetButton();
   this.game.setSpotToMarker(spotId, "X");
   this.ui.showBoard(this.game.board);
+  // {gameType: 'ComputerVsComputer', currentPlayer: "player1", id: "123"}
 }
 
 GameInteractor.prototype.endTurn = function(response, game, ui) {
   this.game = game
   this.ui = ui
+  //end the turn for the CvC would call make move again
   this.game.board = response.board;
   this.game.status = response.status;
   this.ui.enableSpots(this.game.board);
