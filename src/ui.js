@@ -1,5 +1,4 @@
 function UI() {
-
 }
 
 UI.prototype.showBoard = function(board) {
@@ -52,14 +51,16 @@ UI.prototype.displayHumanTurn = function() {
   $("#turn-label").html("Your turn!");
 }
 
+UI.prototype.displayTurn = function(marker) {
+  $("#turn-label").html(marker + "'s turn!");
+}
+
 UI.prototype.displayComputerTurn = function() {
   $("#turn-label").html("Computer is thinking...");
 }
 
-UI.prototype.clearBoard = function(board) {
-  board.forEach(function(spot, index) {
-    $("#" + index).html("");
-  });
-  this.enableAllSpots(board);
-  this.displayHumanTurn();
+UI.prototype.clearBoard = function() {
+  for (i = 0; i < 9; i++) {
+    $("#" + i).html("");
+  }
 }

@@ -1,9 +1,9 @@
-.container {
+/*.container {
   width: 80%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2em;
-}
+}*/
 
 body {
   background-color: #D2D7D3;
@@ -35,12 +35,12 @@ body {
 }
 
 h1 {
-  font: 3em "Playfair Display", serif;
+  font-family: "Playfair Display", serif;
   color: #336E7B;
 }
 
 h2 {
-  font: 2em Lato, sans-serif;
+  font-family: Lato, sans-serif;
 }
 
 .game-view {

@@ -1,5 +1,5 @@
 var game;
-var interactor;
+var ui;
 
 $(document).ready(function() {
   $("#game").hide();
@@ -8,26 +8,28 @@ $(document).ready(function() {
   });
   $("#start_game").on("click", function(e) {
     e.preventDefault();
-    var playerFactory = new PlayerFactory();
-    var player1Type = $("input[name=player1]:checked").attr("class")
-    var player2Type = $("input[name=player2]:checked").attr("class")
-    var player1 = playerFactory.getPlayer(player1Type);
-    var player2 = playerFactory.getPlayer(player2Type);
-    game = new Game(player1, player2);
-    interactor = new GameInteractor(new UI(), game, new HttpClient());
-    interactor.startGame();
     $("#menu").hide();
     $("#game").show();
     $(".spot").height($(".spot").width());
+    ui = new UI();
+    var httpClient = new HttpClient();
+    var gameFactory = new GameFactory(httpClient, ui);
+    var player1Type = $("input[name=player1]:checked").attr("class")
+    var player2Type = $("input[name=player2]:checked").attr("class")
+    game = gameFactory.getGame(player1Type, player2Type);
+    game.play();
   });
 
   $(".spot").on("click", function() {
     if ($(this).hasClass("enabled")) {
       id = parseInt($(this).attr("id"));
-      interactor.makeMove(id);
+      game.takeTurn(id);
     }
   });
+
   $("#play-again").on("click", function() {
-    interactor.resetGame();
+    $("#menu").show();
+    $("#game").hide();
+    ui.clearBoard();
   });
 });

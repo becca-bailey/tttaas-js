@@ -41,6 +41,10 @@ MockUI.prototype.enableResetButton = function() {
   this.buttonEnabled = true;
 }
 
+MockUI.prototype.displayTurn = function(marker) {
+  this.statusText = `${marker}'s Turn!`
+}
+
 MockUI.prototype.clearBoard = function() {
   this.shownBoard = ["","","","","","","","",""];
 }

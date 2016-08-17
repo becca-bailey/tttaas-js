@@ -3,7 +3,7 @@ function MockClient(board, status) {
   this.requestMade = false;
 }
 
-MockClient.prototype.makeRequest = function(data, onCompletion, ui, game) {
+MockClient.prototype.postUpdatedGame = function(onCompletion, ui, game) {
   this.requestMade = true;
-  onCompletion(this.mockResponse, game, ui);
+  onCompletion(this.mockResponse, ui, game);
 };

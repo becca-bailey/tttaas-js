@@ -1,20 +1,27 @@
 describe("Game", function() {
-  var game;
+  var mockUI;
+  var mockClient;
 
   beforeEach(function() {
-    game = new Game();
+    mockUI = new MockUI();
+    mockClient = new MockClient(["X","O","","","","","","",""]);
+    game = new Game(mockClient, mockUI);
   });
 
-  it("has a board", function() {
-    expect(game.board).toEqual(["", "", "", "", "", "", "", "", ""]);
-  });
+  describe("endGame", function(){
+    it ("can set the winner message if the status is a player1 win", function() {
+      game.endGame("player1Wins", mockUI);
+      expect(mockUI.statusText).toBe("X wins!!");
+    });
 
-  it("has a status", function() {
-    expect(game.status).toEqual("inProgress");
-  });
+    it ("can set the winner message if the status is a player2 win", function() {
+      game.endGame("player2Wins", mockUI);
+      expect(mockUI.statusText).toBe("O wins!!");
+    });
 
-  it("should be able to set a spot on its board to a marker", function() {
-    game.setSpotToMarker(0, "X");
-    expect(game.board).toEqual(["X", "", "", "", "", "", "", "", ""]);
+    it ("can set the winner message if the status is a tie", function() {
+      game.endGame("tie", mockUI);
+      expect(mockUI.statusText).toBe("It's a tie!!");
+    });
   });
 });
