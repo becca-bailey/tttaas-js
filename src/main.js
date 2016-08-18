@@ -1,6 +1,13 @@
 var game;
 var ui;
 
+function getPlayerInfo(playerNumber) {
+  var playerType = $("input[name=player" + playerNumber + "]:checked").attr("class");
+  var computerDifficulty = $("#computer" + playerNumber + "-level").is(":checked") ? "easy" : "hard";
+  var info = {type: playerType, difficulty: computerDifficulty};
+  return info;
+}
+
 $(document).ready(function() {
   $("#game").hide();
   $(window).resize(function() {
@@ -14,9 +21,7 @@ $(document).ready(function() {
     ui = new UI();
     var httpClient = new HttpClient();
     var gameFactory = new GameFactory(httpClient, ui);
-    var player1Type = $("input[name=player1]:checked").attr("class")
-    var player2Type = $("input[name=player2]:checked").attr("class")
-    game = gameFactory.getGame(player1Type, player2Type);
+    game = gameFactory.getGame(getPlayerInfo(1), getPlayerInfo(2));
     game.play();
   });
 
