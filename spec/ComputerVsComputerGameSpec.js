@@ -1,11 +1,12 @@
 describe("ComputerVsComputerGame", function() {
   var mockUI;
   var mockClient;
+  var gameState = new GameState("computerVsComputer", {type: "computer", difficulty: "hard"}, {type: "computer", difficulty: "hard"})
 
   beforeEach(function() {
     mockUI = new MockUI();
     mockClient = new MockClient(["X","O","","","","","","",""]);
-    game = new ComputerVsComputerGame(mockClient, mockUI);
+    game = new ComputerVsComputerGame(mockClient, mockUI, gameState);
   });
 
   describe("play", function() {
@@ -29,7 +30,7 @@ describe("ComputerVsComputerGame", function() {
   describe("takeTurn", function() {
     beforeEach(function() {
       mockClient = new MockClient(["","","","","O","","","","X"]);
-      game = new ComputerVsComputerGame(mockClient, mockUI);
+      game = new ComputerVsComputerGame(mockClient, mockUI, gameState);
       game.takeTurn(mockUI, new GameState(), mockClient);
     });
     it ("updates the board to show the computer's move", function() {
@@ -42,7 +43,7 @@ describe("ComputerVsComputerGame", function() {
 
     it ("can update the statusText if the game there is a tie", function() {
       mockClient = new MockClient(["X","X","X","","","","","",""], "tie");
-      game = new ComputerVsComputerGame(mockClient, mockUI);
+      game = new ComputerVsComputerGame(mockClient, mockUI, gameState);
       game.takeTurn(mockUI, new GameState(), mockClient);
       expect(mockUI.statusText).toEqual("It's a tie!!");
     });
