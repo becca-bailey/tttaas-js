@@ -1,36 +1,45 @@
-class ComputerVsPlayerGame extends Game {
-  constructor (httpClient, ui) {
-    super(httpClient, ui);
-    this.gameState = new GameState("humanVsComputer");
-  }
+var ComputerVsPlayerGame = function(httpClient, ui) {
+  this.httpClient = httpClient;
+  this.ui = ui;
+  this.gameState = new GameState("humanVsComputer");
+}
 
-  play() {
-    this.computerTurn();
-    this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
-    this.ui.enableSpots(this.gameState.board);
-    this.ui.displayHumanTurn();
-  }
+ComputerVsPlayerGame.prototype.play = function() {
+  this.computerTurn();
+  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
+  this.ui.enableSpots(this.gameState.board);
+  this.ui.displayHumanTurn();
+}
 
-  computerTurn() {
-    this.ui.disableSpots(this.gameState.board);
-    this.ui.displayComputerTurn();
-  }
+ComputerVsPlayerGame.prototype.computerTurn = function() {
+  this.ui.disableSpots(this.gameState.board);
+  this.ui.displayComputerTurn();
+}
 
-  takeTurn(spotId) {
-    this.gameState.board[spotId] = this.gameState.getPlayerMarker();
-    this.computerTurn();
-    this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
-  }
+ComputerVsPlayerGame.prototype.takeTurn = function(spotId) {
+  this.gameState.board[spotId] = this.gameState.getPlayerMarker();
+  this.ui.showBoard(this.gameState.board);
+  this.computerTurn();
+  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
+}
 
-  endTurn(response, ui, gameState) {
-    gameState.board = response.board;
-    gameState.status = response.status;
-    ui.showBoard(gameState.board);
-    if (gameState.isOver()) {
-      ComputerVsPlayerGame.prototype.endGame(gameState.status, ui)
-    } else {
-      ui.displayHumanTurn();
-      ui.enableSpots(gameState.board);
-    }
+ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
+  gameState.board = response.board;
+  gameState.status = response.status;
+  ui.showBoard(gameState.board);
+  if (gameState.isOver()) {
+    ComputerVsPlayerGame.prototype.endGame(gameState.status, ui);
+  } else {
+    ui.displayHumanTurn();
+    ui.enableSpots(gameState.board);
+  }
+}
+ComputerVsPlayerGame.prototype.endGame = function(status, ui) {
+  if (status === "tie") {
+    ui.displayTie();
+  } else if (status === "player1Wins") {
+    ui.displayWinner("X");
+  } else if (status === "player2Wins") {
+    ui.displayWinner("O");
   }
 }

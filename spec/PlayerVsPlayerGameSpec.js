@@ -67,4 +67,21 @@ describe("PlayerVsPlayerGame", function() {
       expect(mockUI.statusText).toEqual("O wins!!");
     });
   });
+
+  describe("endGame", function(){
+    it ("can set the winner message if the status is a player1 win", function() {
+      game.endGame("player1Wins", mockUI);
+      expect(mockUI.statusText).toBe("X wins!!");
+    });
+
+    it ("can set the winner message if the status is a player2 win", function() {
+      game.endGame("player2Wins", mockUI);
+      expect(mockUI.statusText).toBe("O wins!!");
+    });
+
+    it ("can set the winner message if the status is a tie", function() {
+      game.endGame("tie", mockUI);
+      expect(mockUI.statusText).toBe("It's a tie!!");
+    });
+  });
 });

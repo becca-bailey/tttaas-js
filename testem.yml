@@ -3,11 +3,7 @@ src_files:
     - lib/jquery-git.min.js
     - jasmine/lib/jasmine-jquery.js
     - src/*.js
-    - src/games/Game.js
-    - src/games/ComputerVsPlayerGame.js
-    - src/games/ComputerVsComputerGame.js
-    - src/games/PlayerVsComputerGame.js
-    - src/games/PlayerVsPlayerGame.js
+    - src/games/*.js
     - spec/*.js
     - spec/mocks/*.js
 launch_in_dev:
