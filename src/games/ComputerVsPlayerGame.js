@@ -1,7 +1,7 @@
-var ComputerVsPlayerGame = function(httpClient, ui) {
+var ComputerVsPlayerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
-  this.gameState = new GameState("humanVsComputer");
+  this.gameState = gameState;
 }
 
 ComputerVsPlayerGame.prototype.play = function() {

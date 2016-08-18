@@ -1,11 +1,12 @@
 describe("PlayerVsPlayerGame", function() {
   var mockUI;
   var mockClient;
+  var gameState = new GameState("humanVsHuman", {type: "human", difficulty: "hard"}, {type: "human", difficulty: "hard"})
 
   beforeEach(function() {
     mockUI = new MockUI();
     mockClient = new MockClient(["X","","","","","","","",""], "in progress");
-    game = new PlayerVsPlayerGame(mockClient, mockUI);
+    game = new PlayerVsPlayerGame(mockClient, mockUI, gameState);
   });
   describe("play", function() {
 
@@ -48,21 +49,21 @@ describe("PlayerVsPlayerGame", function() {
 
     it ("can disable the board spots if the game is over", function() {
       mockClient = new MockClient(["X","X","X","","","","","",""], "player1Wins");
-      game = new PlayerVsPlayerGame(mockClient, mockUI);
+      game = new PlayerVsPlayerGame(mockClient, mockUI, gameState);
       game.takeTurn(1);
       expect(mockUI.spotsEnabled).toBe(false);
     });
 
     it ("can update the statusText if the game is over and X wins", function() {
       mockClient = new MockClient(["X","X","X","","","","","",""], "player1Wins");
-      game = new PlayerVsPlayerGame(mockClient, mockUI);
+      game = new PlayerVsPlayerGame(mockClient, mockUI, gameState);
       game.takeTurn(1);
       expect(mockUI.statusText).toEqual("X wins!!");
     });
 
     it ("can update the statusText if the game is over and O wins", function() {
       mockClient = new MockClient(["O","O","O","","","","","",""], "player2Wins");
-      game = new PlayerVsPlayerGame(mockClient, mockUI);
+      game = new PlayerVsPlayerGame(mockClient, mockUI, gameState);
       game.takeTurn(1);
       expect(mockUI.statusText).toEqual("O wins!!");
     });
