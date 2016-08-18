@@ -23,10 +23,15 @@ HttpClient.prototype.postUpdatedGame = function(onCompletion, ui, gameState) {
 };
 
 HttpClient.prototype.gameStateAsJSON = function(gameState) {
+  var json = {};
+  json["board"] = gameState.board;
+  json["gameType"] = gameState.gameType;
   if (gameState.gameType === "computerVsComputer") {
-    var computerMarker = gameState.getPlayerMarker();
-    return "{\"board\": " + JSON.stringify(gameState.board) + ", \"gameType\": \"" + gameState.gameType + "\", \"computerMarker\": \"" + computerMarker + "\"}";
-  } else {
-    return "{\"board\": " + JSON.stringify(gameState.board) + ", \"gameType\": \"" + gameState.gameType + "\"}";
+    json["computerMarker"] = gameState.getPlayerMarker();
   }
+  if (gameState.currentPlayer().type === "computer") {
+    json["computerDifficulty"] = gameState.currentPlayer().difficulty;
+  }
+  console.log(json);
+  return JSON.stringify(json);
 }
