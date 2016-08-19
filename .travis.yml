@@ -4,3 +4,4 @@ before_install:
   - npm install testem
 script:
   - testem ci --launch PhantomJS
+

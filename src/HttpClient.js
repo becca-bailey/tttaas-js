@@ -29,6 +29,13 @@ HttpClient.prototype.gameStateAsJSON = function(gameState) {
   if (gameState.gameType === "computerVsComputer") {
     json["computerMarker"] = gameState.getPlayerMarker();
   }
+  if (gameState.gameType === "humanVsComputer") {
+    if (gameState.player1.type === "computer") {
+      json["computerDifficulty"] = gameState.player1.difficulty;
+    } else {
+      json["computerDifficulty"] = gameState.player2.difficulty;
+    }
+  }
   if (gameState.currentPlayer().type === "computer") {
     json["computerDifficulty"] = gameState.currentPlayer().difficulty;
   }
