@@ -4,9 +4,9 @@ function UI() {
 UI.prototype.showBoard = function(board) {
   board.forEach(function(spot, index) {
     if (spot === "X") {
-      $("#" + index).html("<span class='human-move'>X</span");
+      $("#" + index).html("<h1 class='x-move valign center-align'>" + spot + "</h1>");
     } else {
-      $("#" + index).html(spot);
+      $("#" + index).html("<h1 class='o-move valign center-align'>" + spot + "</h1>");
     }
   });
 }

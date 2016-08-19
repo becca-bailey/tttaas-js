@@ -10,9 +10,6 @@ function getPlayerInfo(playerNumber) {
 
 $(document).ready(function() {
   $("#game").hide();
-  $(window).resize(function() {
-    $(".spot").height($(".spot").width());
-  });
   $("#start_game").on("click", function(e) {
     e.preventDefault();
     $("#menu").hide();

@@ -5,9 +5,42 @@
   margin-top: 2em;
 }*/
 
+/* Typography */
+
+h1 {
+  font-family: "Playfair Display", serif;
+  color: #336E7B;
+}
+
+h2 {
+  font-family: Lato, sans-serif;
+}
+
+.x-move {
+  width: 100%;
+}
+
+.o-move {
+  color: black;
+  width: 100%;
+}
+
+/* General */
+
 body {
   background-color: #D2D7D3;
+  padding-bottom: 2em;
 }
+
+.game-view {
+  text-align: center;
+}
+
+.button-container {
+  margin-top: 2em;
+}
+
+/* Board style */
 
 #board>.row {
   margin-bottom: 0;
@@ -15,7 +48,7 @@ body {
 
 .spot {
   font-size: 4em;
-  text-align: center;
+  text-align: center !important;
 }
 
 .top {
@@ -34,27 +67,7 @@ body {
   border-left: 2px solid black;
 }
 
-h1 {
-  font-family: "Playfair Display", serif;
-  color: #336E7B;
-}
-
-h2 {
-  font-family: Lato, sans-serif;
-}
-
-.game-view {
-  text-align: center;
-}
-
-#board {
-  margin: 0 auto;
-  width: 50%;
-}
-
-.human-move {
-  color: #336E7B;
-}
+/* Menu */
 
 .switch {
   padding-top: 14px;
