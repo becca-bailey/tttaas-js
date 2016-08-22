@@ -18,11 +18,11 @@ UI.prototype.disableSpots = function(board) {
 }
 
 UI.prototype.disableResetButton = function() {
-  $("#play-again").prop("disabled", true);
+  $("#play-again").addClass("disabled");
 }
 
 UI.prototype.enableResetButton = function() {
-  $("#play-again").prop("disabled", false);
+  $("#play-again").removeClass("disabled");
 }
 
 UI.prototype.enableSpots = function(board) {
@@ -63,4 +63,52 @@ UI.prototype.clearBoard = function() {
   for (i = 0; i < 9; i++) {
     $("#" + i).html("");
   }
+}
+
+UI.prototype.showMenu = function() {
+  $("#menu").show();
+}
+
+UI.prototype.hideMenu = function() {
+  $("#menu").hide();
+}
+
+UI.prototype.showGame = function() {
+  $("#game").show();
+  this.setSpotHeightToWidth();
+}
+
+UI.prototype.hideGame = function() {
+  $("#game").hide();
+}
+
+UI.prototype.startGame = function() {
+  this.hideMenu();
+  this.showGame();
+}
+
+UI.prototype.playAgain = function() {
+  this.showMenu();
+  this.hideGame();
+  this.clearBoard();
+}
+
+UI.prototype.showSwitch = function(n) {
+  if ($("#computer" + n).is(":checked")) {
+    $("#switch" + n).show();
+  }
+}
+
+UI.prototype.showSwitchOnChange = function(n) {
+  $("#computer" + n).on("change", function() {
+    $("#switch" + n).show();
+  });
+
+  $("#human" + n).on("change", function() {
+    $("#switch" + n).hide();
+  });
+}
+
+UI.prototype.setSpotHeightToWidth = function() {
+  $(".spot").height($(".spot").width());
 }

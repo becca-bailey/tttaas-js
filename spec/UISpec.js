@@ -57,11 +57,94 @@ describe("UI", function() {
 
   it("can disable the play again button", function() {
     ui.disableResetButton();
-    expect($("#play-again")).toHaveProp("disabled");
+    expect($("#play-again")).toHaveClass("disabled");
   });
 
   it("can enable the play again button", function() {
     ui.enableResetButton();
-    expect($("#play-again")).toHaveProp("disabled", false);
+    expect($("#play-again")).not.toHaveClass("disabled");
   });
+
+  it("shows the menu on page load", function() {
+    expect($("#menu")).toBeVisible();
+  });
+
+  it("can hide the menu", function() {
+    ui.hideMenu();
+    expect($("#menu")).toBeHidden();
+  });
+
+  it("can show the menu", function() {
+    ui.hideMenu();
+    ui.showMenu();
+    expect($("#menu")).toBeVisible();
+  });
+
+  it("hides the game on page load", function() {
+    expect($("#game")).toBeHidden();
+  });
+
+  it("can show the game", function() {
+    ui.showGame();
+    expect($("#game")).toBeVisible();
+  });
+
+  it("can hide the game", function() {
+    ui.showGame();
+    ui.hideGame();
+    expect($("#game")).toBeHidden();
+  });
+
+  it ("can show the switch for computer player 1 when it is already selected", function() {
+      expect($("#switch1")).toBeHidden();
+      $("#computer1").attr('checked',true);
+      ui.showSwitch(1);
+      expect($("#switch1")).toBeVisible();
+  });
+
+  it ("can show the switch for computer player 2 when it is already selected", function() {
+      expect($("#switch2")).toBeHidden();
+      $("#computer2").attr('checked',true);
+      ui.showSwitch(2);
+      expect($("#switch2")).toBeVisible();
+  });
+
+  it ("can show the switch for computer player 1 when it is changed", function() {
+      expect($("#switch1")).toBeHidden();
+      ui.showSwitchOnChange(1);
+      $("#computer1").attr('checked',true);
+      $("#computer1").trigger('change');
+      expect($("#switch1")).toBeVisible();
+  });
+
+  it ("can hide the switch for computer player 1 when it is changed", function() {
+      $("#computer1").attr('checked',true);
+      ui.showSwitch(1);
+      expect($("#switch1")).toBeVisible();
+
+      ui.showSwitchOnChange(1);
+      $("#human1").attr('checked',true);
+      $("#human1").trigger('change');
+      expect($("#switch1")).toBeHidden();
+  });
+
+  it ("can show the switch for computer player 2 when it is changed", function() {
+      expect($("#switch2")).toBeHidden();
+      ui.showSwitchOnChange(2);
+      $("#computer2").attr('checked',true);
+      $("#computer2").trigger('change');
+      expect($("#switch2")).toBeVisible();
+  });
+
+  it ("can hide the switch for computer player 2 when it is changed", function() {
+      $("#computer2").attr('checked',true);
+      ui.showSwitch(2);
+      expect($("#switch2")).toBeVisible();
+
+      ui.showSwitchOnChange(2);
+      $("#human2").attr('checked',true);
+      $("#human2").trigger('change');
+      expect($("#switch2")).toBeHidden();
+  });
+
 });
