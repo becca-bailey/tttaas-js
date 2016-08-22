@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <script type="text/javascript" src="lib/jquery-git.min.js"></script>
     <script type="text/javascript" src="src/main.js"></script>
-    <script type="text/javascript" src="src/style.js"></script>
     <script type="text/javascript" src="src/GameState.js"></script>
     <script type="text/javascript" src="src/games/ComputerVsComputerGame.js"></script>
     <script type="text/javascript" src="src/games/ComputerVsPlayerGame.js"></script>
@@ -40,7 +39,7 @@
                   </p>
                 </div>
                 <div class="col s8">
-                  <div class="switch", id="switch1">
+                  <div class="switch", id="switch1", style="display: none">
                     <label>
                       Hard
                       <input type="checkbox" id="computer1-level">
@@ -67,7 +66,7 @@
                   </p>
                 </div>
                 <div class="col s8">
-                  <div class="switch", id="switch2">
+                  <div class="switch", id="switch2", style="display: none">
                     <label>
                       Hard
                       <input type="checkbox" id="computer2-level">
@@ -85,7 +84,7 @@
           </div>
         </form>
       </section>
-      <section id="game">
+      <section id="game" style="display: none">
         <h1 id="title">Welcome to Tic Tac Toe!</h1>
         <h2 id="turn-label">Your turn!</h2>
         <div class="row">

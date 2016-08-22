@@ -7,6 +7,7 @@ var ComputerVsComputerGame = function(httpClient, ui, gameState) {
 ComputerVsComputerGame.prototype.play = function() {
   this.ui.disableSpots(this.gameState.board);
   this.ui.displayTurn(this.gameState.getPlayerMarker());
+  this.ui.disableResetButton();
   this.httpClient.postUpdatedGame(ComputerVsComputerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
@@ -30,6 +31,7 @@ ComputerVsComputerGame.prototype.endTurn = function(response, ui, gameState) {
 }
 
 ComputerVsComputerGame.prototype.endGame = function(status, ui) {
+  ui.enableResetButton();
   if (status === "tie") {
     ui.displayTie()
   } else if (status === "player1Wins") {
