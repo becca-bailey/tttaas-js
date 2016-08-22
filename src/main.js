@@ -10,13 +10,6 @@ function getPlayerInfo(playerNumber) {
   return player;
 }
 
-function getPlayerInfo(playerNumber) {
-  var playerType = $("input[name=player" + playerNumber + "]:checked").attr("class");
-  var computerDifficulty = $("#computer" + playerNumber + "-level").is(":checked") ? "easy" : "hard";
-  var info = {type: playerType, difficulty: computerDifficulty};
-  return info;
-}
-
 $(document).ready(function() {
   var game;
   var ui = new UI();
@@ -32,6 +25,7 @@ $(document).ready(function() {
   $(window).resize(function() {
     ui.setSpotHeightToWidth();
   });
+
 
   $("#start_game").on("click", function(e) {
     e.preventDefault();
