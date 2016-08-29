@@ -113,20 +113,20 @@ UI.prototype.setSpotHeightToWidth = function() {
   $(".spot").height($(".spot").width());
 }
 
-UI.prototype.listenForStartGameClicked = function(callback) {
-  $("#start_game").on("click", function(e) {
+UI.prototype.callOnElementClick = function(element, callback) {
+  $(element).on("click", function(e) {
     callback(e);
   });
 }
 
-UI.prototype.listenForSpotClick = function(callback) {
-  $(".spot").on("click", function(e) {
-    callback(e);
-  });
+UI.prototype.listenForStartGameClicked = function(startGame) {
+  this.callOnElementClick("#start_game", startGame);
 }
 
-UI.prototype.listenForPlayAgainClick = function(callback) {
-  $("#play-again").on("click", function(e) {
-    callback(e);
-  });
+UI.prototype.listenForSpotClick = function(makeMove) {
+  this.callOnElementClick(".spot", makeMove);
+}
+
+UI.prototype.listenForPlayAgainClick = function(playAgain) {
+  this.callOnElementClick("#play-again", playAgain);
 }
