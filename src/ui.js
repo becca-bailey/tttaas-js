@@ -112,3 +112,21 @@ UI.prototype.showSwitchOnChange = function(n) {
 UI.prototype.setSpotHeightToWidth = function() {
   $(".spot").height($(".spot").width());
 }
+
+UI.prototype.listenForStartGameClicked = function(callback) {
+  $("#start_game").on("click", function(e) {
+    callback(e);
+  });
+}
+
+UI.prototype.listenForSpotClick = function(callback) {
+  $(".spot").on("click", function(e) {
+    callback(e);
+  });
+}
+
+UI.prototype.listenForPlayAgainClick = function(callback) {
+  $("#play-again").on("click", function(e) {
+    callback(e);
+  });
+}

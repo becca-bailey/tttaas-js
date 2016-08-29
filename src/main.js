@@ -22,28 +22,31 @@ $(document).ready(function() {
   ui.showSwitchOnChange(1);
   ui.showSwitchOnChange(2);
 
-  $(window).resize(function() {
-    ui.setSpotHeightToWidth();
-  });
+  ui.listenForStartGameClicked(startGameClicked)
+  ui.listenForSpotClick(spotClicked);
+  ui.listenForPlayAgainClick(playAgainClicked)
 
-
-  $("#start_game").on("click", function(e) {
+  function startGameClicked(e) {
     e.preventDefault();
     ui.startGame();
     game = gameFactory.getGame(getPlayerInfo(1), getPlayerInfo(2));
     game.play();
-  });
+  }
 
-  $(".spot").on("click", function() {
-    if ($(this).hasClass("enabled")) {
-      id = parseInt($(this).attr("id"));
-      game.takeTurn(id);
-    }
-  });
-
-  $("#play-again").on("click", function() {
-    if (!$(this).hasClass("disabled")) {
+  function playAgainClicked(e) {
+    if (!$(e.target).hasClass("disabled")) {
       ui.playAgain();
     }
+  }
+
+  function spotClicked(e) {
+    if ($(e.target).hasClass("enabled")) {
+      id = parseInt($(e.target).attr("id"));
+      game.takeTurn(id);
+    }
+  }
+
+  $(window).resize(function() {
+    ui.setSpotHeightToWidth();
   });
 });
