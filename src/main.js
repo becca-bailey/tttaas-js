@@ -1,3 +1,5 @@
+var environment = 'production'
+
 function getPlayerInfo(playerNumber) {
   var playerType = $("input[name=player" + playerNumber + "]:checked").attr("class");
   var computerDifficulty;
@@ -11,7 +13,7 @@ function getPlayerInfo(playerNumber) {
 $(document).ready(function() {
   var game;
   var ui = new UI();
-  var httpClient = new HttpClient();
+  var httpClient = new HttpClient(environment);
   var gameFactory = new GameFactory(httpClient, ui);
 
   ui.showSwitch(1);

@@ -1,11 +1,17 @@
-function HttpClient() {
+function HttpClient(environment) {
+  if (environment == 'local'){
+    this.url = 'localhost:5000/game'
+  } else {
+    this.url = "http://stormy-savannah-24890.herokuapp.com/game"
+  }
+
 
 }
 
 HttpClient.prototype.postUpdatedGame = function(onCompletion, ui, gameState) {
   var data = this.gameStateAsJSON(gameState);
   $.ajax({
-          url: "http://stormy-savannah-24890.herokuapp.com/game",
+          url: this.url,
           crossOrigin: true,
           type: "POST",
           dataType: "json",
