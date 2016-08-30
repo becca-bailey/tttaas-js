@@ -13,7 +13,7 @@ PlayerVsPlayerGame.prototype.takeTurn = function(spotId) {
   this.ui.disableSpots(this.gameState.board);
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
-  this.httpClient.postUpdatedGame(PlayerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
+  this.httpClient.getGameStatus(PlayerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 };
 
 PlayerVsPlayerGame.prototype.endGame = function(status, ui) {

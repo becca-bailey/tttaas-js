@@ -26,6 +26,7 @@ $(document).ready(function() {
   ui.listenForSpotClick(spotClicked);
   ui.listenForPlayAgainClick(playAgainClicked)
 
+
   function startGameClicked(e) {
     e.preventDefault();
     ui.startGame();

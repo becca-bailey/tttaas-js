@@ -7,3 +7,8 @@ MockClient.prototype.postUpdatedGame = function(onCompletion, ui, game) {
   this.requestMade = true;
   onCompletion(this.mockResponse, ui, game);
 };
+
+MockClient.prototype.getGameStatus = function(onCompletion, ui, game) {
+  this.requestMade = true;
+  onCompletion(this.mockResponse, ui, game);
+};
