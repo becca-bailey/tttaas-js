@@ -18070,16 +18070,15 @@ HandlebarsCompiler.prototype.load = function(templateName, onCompletion) {
   var template;
 
   $.ajax({
-      url: "../" + templateName + ".handlebars",
+      url: "../partials/" + templateName + ".html",
       cache: true,
       success: function(data) {
           source    = data;
           template  = Handlebars.compile(source);
-          $('#' + templateName).html(template);
+          $('#' + templateName + "-container").html(template);
           onCompletion();
       }
   });
-  console.log("loaded " + templateName);
 }
 
 module.exports = HandlebarsCompiler;

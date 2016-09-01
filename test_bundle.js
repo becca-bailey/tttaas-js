@@ -11484,8 +11484,9 @@ describe("UI", function() {
   beforeEach(function() {
     ui = new UI();
     game = new GameState();
-    jasmine.getFixtures().fixturesPath = '../spec/fixtures'
-    jasmine.getFixtures().load('indexFixture.html');
+    jasmine.getFixtures().fixturesPath = '../partials/'
+    jasmine.getFixtures().load('game.html', 'menu.html');
+    // jasmine.getFixtures().load('menu.html');
   });
 
   describe("#Game", function(){
