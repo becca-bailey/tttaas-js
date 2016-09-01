@@ -1,3 +1,7 @@
+var $ = require('../lib/jquery-git.min');
+var UI = require('../src/ui');
+var GameState = require('../src/GameState');
+
 describe("UI", function() {
   var board = ["X","","","","","","","",""];
 

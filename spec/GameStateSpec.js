@@ -1,3 +1,5 @@
+var GameState = require('../src/GameState');
+
 describe("GameState", function() {
   var gameState;
 

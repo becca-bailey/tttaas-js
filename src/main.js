@@ -1,3 +1,8 @@
+var $ = require('../lib/jquery-git.min');
+var UI = require('./ui');
+var HttpClient = require('./HttpClient');
+var GameFactory = require('./GameFactory');
+
 var environment = 'production'
 
 function getPlayerInfo(playerNumber) {

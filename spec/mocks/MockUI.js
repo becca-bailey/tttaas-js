@@ -48,3 +48,5 @@ MockUI.prototype.displayTurn = function(marker) {
 MockUI.prototype.clearBoard = function() {
   this.shownBoard = ["","","","","","","","",""];
 }
+
+module.exports = MockUI;

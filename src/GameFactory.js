@@ -1,3 +1,9 @@
+var GameState = require('./GameState');
+var PlayerVsPlayerGame = require('./games/PlayerVsPlayerGame');
+var PlayerVsComputerGame = require('./games/PlayerVsComputerGame');
+var ComputerVsPlayerGame = require('./games/ComputerVsPlayerGame');
+var ComputerVsComputerGame = require('./games/ComputerVsComputerGame');
+
 function GameFactory(httpClient, ui) {
   this.httpClient = httpClient;
   this.ui = ui;
@@ -14,3 +20,5 @@ GameFactory.prototype.getGame = function(player1, player2) {
     return new ComputerVsComputerGame(this.httpClient, this.ui, new GameState("computerVsComputer", player1, player2));
   }
 }
+
+module.exports = GameFactory;

@@ -38,3 +38,5 @@ PlayerVsComputerGame.prototype.endGame = function(status, ui) {
     ui.displayWinner("O");
   }
 }
+
+module.exports = PlayerVsComputerGame;

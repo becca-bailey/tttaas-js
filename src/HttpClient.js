@@ -1,3 +1,5 @@
+var $ = require('../lib/jquery-git.min');
+
 function HttpClient(environment) {
   if (environment == 'local'){
     this.url = 'http://localhost:5000/'
@@ -57,3 +59,5 @@ HttpClient.prototype.gameStateAsJSON = function(gameState) {
 HttpClient.prototype.boardParameters = function(gameState) {
   return "?board=" + JSON.stringify(gameState.board)
 }
+
+module.exports = HttpClient;

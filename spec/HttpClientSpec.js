@@ -1,3 +1,6 @@
+var HttpClient = require('../src/HttpClient');
+var GameState = require('../src/GameState');
+
 describe("HttpClient", function() {
 var client;
 var player1;
