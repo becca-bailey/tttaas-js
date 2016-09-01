@@ -16,7 +16,11 @@
     "url": "https://github.com/beccanelson/tttaas-js/issues"
   },
   "homepage": "https://github.com/beccanelson/tttaas-js#readme",
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "handlebars": "^4.0.5"
+  },
   "devDependencies": {
-    "jquery": "^3.1.0"
+    "beefy": "^2.1.8"
   }
 }

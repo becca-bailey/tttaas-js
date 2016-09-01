@@ -1,0 +1,61 @@
+  <form action="game.html" method="get">
+    <div class="row">
+      <div class="col s12 m6">
+        <h2 class="center-align">Player 1</h2>
+        <p>This player is a...</p>
+        <p>
+          <input name="player1" type="radio" id="human1" class="human" checked/>
+          <label for="human1">Human</label>
+        </p>
+        <div class="row">
+          <div class="col s4">
+            <p>
+              <input name="player1" type="radio" id="computer1" class="computer" />
+              <label for="computer1">Computer</label>
+            </p>
+          </div>
+          <div class="col s8">
+            <div class="switch", id="switch1", style="display: none">
+              <label>
+                Hard
+                <input type="checkbox" id="computer1-level">
+                <span class="lever"></span>
+                Easy
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6">
+        <h2 class="center-align">Player 2</h2>
+        <p>This player is a...</p>
+        <p>
+          <input name="player2" type="radio" id="human2" class="human" checked/>
+          <label for="human2">Human</label>
+        </p>
+        <div class="row">
+          <div class="col s4">
+            <p>
+              <input name="player2" type="radio" id="computer2" class="computer" />
+              <label for="computer2">Computer</label>
+            </p>
+          </div>
+          <div class="col s8">
+            <div class="switch", id="switch2", style="display: none">
+              <label>
+                Hard
+                <input type="checkbox" id="computer2-level">
+                <span class="lever"></span>
+                Easy
+              </label>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="button-container col  m4 offset-m4 s8 offset-s2">
+        <a class="waves-effect waves-light btn-large center-align" id="start_game">Let's play!</a>
+      </div>
+    </div>
+  </div>
+</form>
