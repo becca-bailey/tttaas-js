@@ -10,7 +10,6 @@ describe("UI", function() {
     game = new GameState();
     jasmine.getFixtures().fixturesPath = '../partials/'
     jasmine.getFixtures().load('game.html', 'menu.html');
-    // jasmine.getFixtures().load('menu.html');
   });
 
   describe("#Game", function(){

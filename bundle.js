@@ -309,7 +309,7 @@ function amdefine(module, requireFn) {
 module.exports = amdefine;
 
 }).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
-},{"_process":58,"path":57}],3:[function(require,module,exports){
+},{"_process":59,"path":58}],3:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4976,7 +4976,7 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions['.hbs'] = extension;
 }
 
-},{"../dist/cjs/handlebars":3,"../dist/cjs/handlebars/compiler/printer":13,"fs":56}],33:[function(require,module,exports){
+},{"../dist/cjs/handlebars":3,"../dist/cjs/handlebars/compiler/printer":13,"fs":57}],33:[function(require,module,exports){
 /*eslint-disable no-unused-vars*/
 /*!
  * jQuery JavaScript Library v3.1.0
@@ -17992,6 +17992,32 @@ define(function (require, exports, module) {
 });
 
 },{"amdefine":2}],45:[function(require,module,exports){
+module.exports={
+  "name": "becca-tom",
+  "version": "1.0.0",
+  "description": "Tic tac toe client in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "testem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beccanelson/tttaas-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beccanelson/tttaas-js/issues"
+  },
+  "homepage": "https://github.com/beccanelson/tttaas-js#readme",
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "handlebars": "^4.0.5"
+  },
+  "environment": "production"
+}
+
+},{}],46:[function(require,module,exports){
 var GameState = require('./GameState');
 var PlayerVsPlayerGame = require('./games/PlayerVsPlayerGame');
 var PlayerVsComputerGame = require('./games/PlayerVsComputerGame');
@@ -18017,7 +18043,7 @@ GameFactory.prototype.getGame = function(player1, player2) {
 
 module.exports = GameFactory;
 
-},{"./GameState":46,"./games/ComputerVsComputerGame":50,"./games/ComputerVsPlayerGame":51,"./games/PlayerVsComputerGame":52,"./games/PlayerVsPlayerGame":53}],46:[function(require,module,exports){
+},{"./GameState":47,"./games/ComputerVsComputerGame":51,"./games/ComputerVsPlayerGame":52,"./games/PlayerVsComputerGame":53,"./games/PlayerVsPlayerGame":54}],47:[function(require,module,exports){
 function GameState(gameType, player1, player2) {
   this.board = ["", "", "", "", "", "", "", "", ""];
   this.status = "in progress";
@@ -18057,7 +18083,7 @@ GameState.prototype.currentPlayer = function() {
 
 module.exports = GameState;
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var $ = require('jquery');
 var Handlebars = require('handlebars');
 
@@ -18083,17 +18109,15 @@ HandlebarsCompiler.prototype.load = function(templateName, onCompletion) {
 
 module.exports = HandlebarsCompiler;
 
-},{"handlebars":32,"jquery":33}],48:[function(require,module,exports){
+},{"handlebars":32,"jquery":33}],49:[function(require,module,exports){
 var $ = require('../lib/jquery-git.min');
 
 function HttpClient(environment) {
-  if (environment == 'local'){
+  if (environment === 'local'){
     this.url = 'http://localhost:5000/'
   } else {
     this.url = "http://stormy-savannah-24890.herokuapp.com/"
   }
-
-
 }
 
 HttpClient.prototype.postUpdatedGame = function(onCompletion, ui, gameState) {
@@ -18148,7 +18172,7 @@ HttpClient.prototype.boardParameters = function(gameState) {
 
 module.exports = HttpClient;
 
-},{"../lib/jquery-git.min":1}],49:[function(require,module,exports){
+},{"../lib/jquery-git.min":1}],50:[function(require,module,exports){
 var $ = require('jquery');
 var UI = require('./ui');
 var HttpClient = require('./HttpClient');
@@ -18159,8 +18183,7 @@ var TicTacToe = function() {
 }
 
 TicTacToe.prototype.main = function() {
-  var environment = 'production';
-  // change this
+  var environment = require('../package.json').environment;
 
   this.ui = new UI();
   this.httpClient = new HttpClient(environment);
@@ -18210,7 +18233,7 @@ TicTacToe.prototype.spotClicked = function(e) {
 
 module.exports = TicTacToe;
 
-},{"./GameFactory":45,"./HttpClient":48,"./ui":55,"jquery":33}],50:[function(require,module,exports){
+},{"../package.json":45,"./GameFactory":46,"./HttpClient":49,"./ui":56,"jquery":33}],51:[function(require,module,exports){
 var ComputerVsComputerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
@@ -18265,7 +18288,7 @@ ComputerVsComputerGame.prototype.sleep = function(milliseconds) {
 
 module.exports = ComputerVsComputerGame;
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 var ComputerVsPlayerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
@@ -18314,7 +18337,7 @@ ComputerVsPlayerGame.prototype.endGame = function(status, ui) {
 
 module.exports = ComputerVsPlayerGame;
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var PlayerVsComputerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
@@ -18358,7 +18381,7 @@ PlayerVsComputerGame.prototype.endGame = function(status, ui) {
 
 module.exports = PlayerVsComputerGame;
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 function PlayerVsPlayerGame(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
@@ -18402,7 +18425,7 @@ PlayerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
 
 module.exports = PlayerVsPlayerGame;
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var $ = require('jquery');
 var UI = require('./ui');
 var HandlebarsCompiler = require('./HandlebarsCompiler');
@@ -18417,7 +18440,7 @@ $(document).ready(function() {
   });
 });
 
-},{"./HandlebarsCompiler":47,"./TicTacToe":49,"./ui":55,"jquery":33}],55:[function(require,module,exports){
+},{"./HandlebarsCompiler":48,"./TicTacToe":50,"./ui":56,"jquery":33}],56:[function(require,module,exports){
 var $ = require('../lib/jquery-git.min');
 
 function UI() {
@@ -18555,9 +18578,9 @@ UI.prototype.listenForPlayAgainClick = function(playAgain) {
 
 module.exports = UI;
 
-},{"../lib/jquery-git.min":1}],56:[function(require,module,exports){
+},{"../lib/jquery-git.min":1}],57:[function(require,module,exports){
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -18785,7 +18808,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":58}],58:[function(require,module,exports){
+},{"_process":59}],59:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -18967,4 +18990,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[54]);
+},{}]},{},[55]);

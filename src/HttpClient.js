@@ -1,13 +1,11 @@
 var $ = require('../lib/jquery-git.min');
 
 function HttpClient(environment) {
-  if (environment == 'local'){
+  if (environment === 'local'){
     this.url = 'http://localhost:5000/'
   } else {
     this.url = "http://stormy-savannah-24890.herokuapp.com/"
   }
-
-
 }
 
 HttpClient.prototype.postUpdatedGame = function(onCompletion, ui, gameState) {

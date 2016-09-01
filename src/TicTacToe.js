@@ -8,8 +8,7 @@ var TicTacToe = function() {
 }
 
 TicTacToe.prototype.main = function() {
-  var environment = 'production';
-  // change this
+  var environment = require('../package.json').environment;
 
   this.ui = new UI();
   this.httpClient = new HttpClient(environment);
