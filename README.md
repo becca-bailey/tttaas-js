@@ -5,17 +5,24 @@
 ## To play game locally:
 
 + Clone this repository
-+ Open `index.html` in the browser
++ In the root directory:
+```
+npm install
+npm install -g beefy
+beefy --browserify bundle.js
+```
++ Open `http://localhost:9966` in your browser.
 
 ## To use local API:
 
-+ Navigate to ./src/main.js
-+ Change `production` to `local` on line 1
++ Change `"environment": "production"` to `"environment": "local"` in `package.json`
++ In the root directory, re-load the project:
+```
+npm install -g browserify
+browserify src/main.js -o bundle.js
+```
++ Restart server
 
 ## To run tests:
-
-+ Open `jasmine/SpecRunner.html` in the browser
-
-OR
 
 + In the root directory: `testem`

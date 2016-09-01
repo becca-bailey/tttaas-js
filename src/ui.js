@@ -1,3 +1,5 @@
+var $ = require('../lib/jquery-git.min');
+
 function UI() {
 }
 
@@ -130,3 +132,5 @@ UI.prototype.listenForSpotClick = function(makeMove) {
 UI.prototype.listenForPlayAgainClick = function(playAgain) {
   this.callOnElementClick("#play-again", playAgain);
 }
+
+module.exports = UI;

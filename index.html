@@ -7,110 +7,16 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <script type="text/javascript" src="lib/jquery-git.min.js"></script>
-    <script type="text/javascript" src="src/main.js"></script>
-    <script type="text/javascript" src="src/GameState.js"></script>
-    <script type="text/javascript" src="src/games/ComputerVsComputerGame.js"></script>
-    <script type="text/javascript" src="src/games/ComputerVsPlayerGame.js"></script>
-    <script type="text/javascript" src="src/games/PlayerVsPlayerGame.js"></script>
-    <script type="text/javascript" src="src/games/PlayerVsComputerGame.js"></script>
-    <script type="text/javascript" src="src/GameFactory.js"></script>
-    <script type="text/javascript" src="src/HttpClient.js"></script>
-    <script type="text/javascript" src="src/ui.js"></script>
+    <script type="text/javascript" src="bundle.js"></script>
   </head>
   <body>
     <div class="container">
-      <section id="menu">
-        <h1 class="center-align">Welcome to Tic Tac Toe!</h1>
-        <form action="game.html" method="get">
-          <div class="row">
-            <div class="col s12 m6">
-              <h2 class="center-align">Player 1</h2>
-              <p>This player is a...</p>
-              <p>
-                <input name="player1" type="radio" id="human1" class="human" checked/>
-                <label for="human1">Human</label>
-              </p>
-              <div class="row">
-                <div class="col s4">
-                  <p>
-                    <input name="player1" type="radio" id="computer1" class="computer" />
-                    <label for="computer1">Computer</label>
-                  </p>
-                </div>
-                <div class="col s8">
-                  <div class="switch", id="switch1", style="display: none">
-                    <label>
-                      Hard
-                      <input type="checkbox" id="computer1-level">
-                      <span class="lever"></span>
-                      Easy
-                    </label>
-                  </div>
-                </div>
-              </div>
+      <h1 id="title">Welcome to Tic Tac Toe!</h1>
+      <section id="menu-container">
 
-            </div>
-            <div class="col s12 m6">
-              <h2 class="center-align">Player 2</h2>
-              <p>This player is a...</p>
-              <p>
-                <input name="player2" type="radio" id="human2" class="human" checked/>
-                <label for="human2">Human</label>
-              </p>
-              <div class="row">
-                <div class="col s4">
-                  <p>
-                    <input name="player2" type="radio" id="computer2" class="computer" />
-                    <label for="computer2">Computer</label>
-                  </p>
-                </div>
-                <div class="col s8">
-                  <div class="switch", id="switch2", style="display: none">
-                    <label>
-                      Hard
-                      <input type="checkbox" id="computer2-level">
-                      <span class="lever"></span>
-                      Easy
-                    </label>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="button-container col  m4 offset-m4 s8 offset-s2">
-              <a class="waves-effect waves-light btn-large center-align" id="start_game">Let's play!</a>
-            </div>
-          </div>
-        </form>
       </section>
-      <section id="game" style="display: none">
-        <h1 id="title">Welcome to Tic Tac Toe!</h1>
-        <h2 id="turn-label">Your turn!</h2>
-        <div class="row">
-          <div id="board" class="col s10 offset-s1 m6 offset-m3">
-            <div class="row">
-              <div class="col s4 spot enabled left top valign-wrapper" id="0"></div>
-              <div class="col s4 spot enabled top valign-wrapper" id="1"></div>
-              <div class="col s4 spot enabled right top valign-wrapper" id="2"></div>
-            </div>
-            <div class="row">
-              <div class="col s4 spot enabled left valign-wrapper" id="3"></div>
-              <div class="col s4 spot enabled valign-wrapper" id="4"></div>
-              <div class="col s4 spot enabled right valign-wrapper" id="5"></div>
-            </div>
-            <div class="row">
-              <div class="col s4 spot enabled left bottom valign-wrapper" id="6"></div>
-              <div class="col s4 spot enabled bottom valign-wrapper" id="7"></div>
-              <div class="col s4 spot enabled right bottom valign-wrapper" id="8"></div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="button-container col m4 offset-m4 s8 offset-s2">
-            <a class="waves-effect waves-light btn-large center-align" id="play-again">Play Again</a>
-          </div>
-        </div>
+      <section id="game-container">
+
       </section>
     </div>
   </body>

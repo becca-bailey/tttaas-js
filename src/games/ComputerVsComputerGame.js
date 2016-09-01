@@ -49,3 +49,5 @@ ComputerVsComputerGame.prototype.sleep = function(milliseconds) {
     }
   }
 }
+
+module.exports = ComputerVsComputerGame;

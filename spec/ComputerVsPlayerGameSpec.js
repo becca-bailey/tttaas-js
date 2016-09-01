@@ -1,3 +1,8 @@
+var GameState = require('../src/GameState');
+var MockUI = require('./mocks/MockUI');
+var MockClient = require('./mocks/MockClient');
+var ComputerVsPlayerGame = require('../src/games/ComputerVsPlayerGame');
+
 describe("ComputerVsPlayerGame", function() {
   var mockUI;
   var mockClient;

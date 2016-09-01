@@ -1,3 +1,11 @@
+var GameFactory = require('../src/GameFactory');
+var MockClient = require('./mocks/MockClient');
+var UI = require('../src/UI');
+var PlayerVsPlayerGame = require('../src/games/PlayerVsPlayerGame');
+var PlayerVsComputerGame = require('../src/games/PlayerVsComputerGame');
+var ComputerVsPlayerGame = require('../src/games/ComputerVsPlayerGame');
+var ComputerVsComputerGame = require('../src/games/ComputerVsComputerGame');
+
 describe("GameFactory", function() {
   var computer = {type: "computer", difficulty: "hard"};
   var human = {type: "human", difficulty: "hard"};

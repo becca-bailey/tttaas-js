@@ -34,3 +34,5 @@ GameState.prototype.currentPlayer = function() {
     return this.player2;
   }
 }
+
+module.exports = GameState;

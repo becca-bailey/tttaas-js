@@ -38,3 +38,5 @@ PlayerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
     ui.enableSpots(gameState.board);
   }
 }
+
+module.exports = PlayerVsPlayerGame;

@@ -1,11 +1,15 @@
+var $ = require('../lib/jquery-git.min');
+var UI = require('../src/ui');
+var GameState = require('../src/GameState');
+
 describe("UI", function() {
   var board = ["X","","","","","","","",""];
 
   beforeEach(function() {
     ui = new UI();
     game = new GameState();
-    jasmine.getFixtures().fixturesPath = '../spec/fixtures'
-    jasmine.getFixtures().load('indexFixture.html');
+    jasmine.getFixtures().fixturesPath = '../partials/'
+    jasmine.getFixtures().load('game.html', 'menu.html');
   });
 
   describe("#Game", function(){
