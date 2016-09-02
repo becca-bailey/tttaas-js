@@ -6,15 +6,12 @@ function HandlebarsCompiler() {
 }
 
 HandlebarsCompiler.prototype.load = function(templateName, onCompletion) {
-  var source;
-  var template;
-
   $.ajax({
       url: "../partials/" + templateName + ".html",
       cache: true,
       success: function(data) {
-          source    = data;
-          template  = Handlebars.compile(source);
+          var source    = data;
+          var template  = Handlebars.compile(source);
           $('#' + templateName + "-container").html(template);
           onCompletion();
       }

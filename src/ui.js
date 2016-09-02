@@ -1,4 +1,4 @@
-var $ = require('../lib/jquery-git.min');
+var $ = require('jquery');
 
 function UI() {
 }

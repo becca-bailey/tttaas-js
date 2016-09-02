@@ -1,4 +1,4 @@
-require('../lib/jquery-git.min');
+require('jquery');
 require('../jasmine/lib/jasmine-jquery');
 
 require('./UISpec');
