@@ -2,11 +2,11 @@ var ComputerVsPlayerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
   this.gameState = gameState;
+  this.gameState.isXTurn = true;
 }
 
 ComputerVsPlayerGame.prototype.play = function() {
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
   this.ui.enableSpots(this.gameState.board);
   this.ui.displayHumanTurn();
 }
@@ -14,13 +14,14 @@ ComputerVsPlayerGame.prototype.play = function() {
 ComputerVsPlayerGame.prototype.computerTurn = function() {
   this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
+  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.takeTurn = function(spotId) {
+  this.gameState.switchTurn();
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
@@ -30,6 +31,7 @@ ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
   if (gameState.isOver()) {
     ComputerVsPlayerGame.prototype.endGame(gameState.status, ui);
   } else {
+    gameState.switchTurn();
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
   }

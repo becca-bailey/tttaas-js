@@ -11054,10 +11054,10 @@ describe("ComputerVsPlayerGame", function() {
       expect(mockClient.requestMade).toBe(true);
     });
 
-    it ("does not switch the current player at the end of a turn", function() {
+    it ("does switch the current player at the end of a turn", function() {
       game.gameState.isXTurn = true;
       game.takeTurn(1);
-      expect(game.gameState.isXTurn).toBe(true);
+      expect(game.gameState.isXTurn).toBe(false);
       expect(mockUI.statusText).toEqual("Computer is thinking...");
     });
 
@@ -11143,9 +11143,12 @@ var GameState = require('../src/GameState');
 
 describe("GameState", function() {
   var gameState;
+  var initialBoard = ["", "", "", "", "", "", "", "", ""];
 
   beforeEach(function() {
-    gameState = new GameState();
+    var player1 = {type: "human"};
+    var player2 = {type: "computer", difficulty: "easy"};
+    gameState = new GameState("humanVsComputer", player1, player2);
   });
 
   it("has a board", function() {
@@ -11186,6 +11189,44 @@ describe("GameState", function() {
 
     gameState.updateStatus("player1Wins");
     expect(gameState.isOver()).toBe(true);
+  });
+
+  it("returns the computer difficulty", function() {
+    gameState.isXTurn = false;
+    expect(gameState.getComputerDifficulty()).toEqual("easy");
+  });
+
+  describe("getFields", function() {
+    it("returns two fields for a playerVsPlayerGame", function() {
+      var player1 = {type: "human"};
+      var player2 = {type: "human"};
+      gameState = new GameState("humanVsHuman", player1, player2);
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsHuman"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns three fields for a playerVsComputerGame", function() {
+      gameState.isXTurn = false;
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsComputer", "computerDifficulty": "easy"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns three fields for a computerVsPlayerGame", function() {
+      var player1 = {type: "computer", difficulty: "hard"};
+      var player2 = {type: "human"};
+      gameState = new GameState("humanVsComputer", player1, player2);
+      gameState.isXTurn = true;
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsComputer", "computerDifficulty": "hard"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns four fields for a computerVsComputerGame", function() {
+      var player1 = {type: "computer", difficulty: "hard"};
+      var player2 = {type: "computer", difficulty: "easy"};
+      gameState = new GameState("computerVsComputer", player1, player2);
+      var expectedFields = {"board": initialBoard, "gameType": "computerVsComputer", "computerMarker": "X", "computerDifficulty": "hard"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
   });
 });
 
@@ -11228,6 +11269,7 @@ var expectedJSON;
     expectedJSON.board = gameState.board;
     expectedJSON.gameType = gameState.gameType;
     expectedJSON.computerDifficulty = "hard";
+    gameState.isXTurn = false;
 
     expect(client.gameStateAsJSON(gameState)).toEqual(JSON.stringify(expectedJSON));
   });
@@ -11325,10 +11367,10 @@ describe("PlayerVsComputerGame", function() {
       expect(mockClient.requestMade).toBe(true);
     });
 
-    it ("does not switch the current player at the end of a turn", function() {
+    it ("does switch the current player at the end of a turn", function() {
       game.gameState.isXTurn = true;
       game.takeTurn(1);
-      expect(game.gameState.isXTurn).toBe(true);
+      expect(game.gameState.isXTurn).toBe(false);
       expect(mockUI.statusText).toEqual("Computer is thinking...");
     });
 
@@ -11775,6 +11817,8 @@ GameFactory.prototype.getGame = function(player1, player2) {
 module.exports = GameFactory;
 
 },{"./GameState":16,"./games/ComputerVsComputerGame":18,"./games/ComputerVsPlayerGame":19,"./games/PlayerVsComputerGame":20,"./games/PlayerVsPlayerGame":21}],16:[function(require,module,exports){
+var $ = require('jquery');
+
 function GameState(gameType, player1, player2) {
   this.board = ["", "", "", "", "", "", "", "", ""];
   this.status = "in progress";
@@ -11812,9 +11856,38 @@ GameState.prototype.currentPlayer = function() {
   }
 }
 
+GameState.prototype.getComputerDifficulty = function() {
+  return this.currentPlayer().difficulty;
+}
+
+GameState.prototype.getAdditionalFields = function() {
+  switch (this.gameType) {
+    case "humanVsHuman":
+      return {};
+      break;
+    case "humanVsComputer":
+      return {"computerDifficulty": this.getComputerDifficulty()};
+      break;
+    case "computerVsComputer":
+      return {"computerMarker": this.getPlayerMarker(), "computerDifficulty": this.getComputerDifficulty()};
+      break;
+  }
+}
+
+GameState.prototype.getFields = function() {
+  var fields = {};
+  fields["board"] = this.board;
+  fields["gameType"] = this.gameType;
+  var additionalFields = this.getAdditionalFields();
+  $.each(additionalFields, function(key, value) {
+    fields[key] = value;
+  });
+  return fields
+}
+
 module.exports = GameState;
 
-},{}],17:[function(require,module,exports){
+},{"jquery":2}],17:[function(require,module,exports){
 var $ = require('jquery');
 
 function HttpClient(environment) {
@@ -11852,22 +11925,7 @@ HttpClient.prototype.getGameStatus = function(onCompletion, ui, gameState) {
 }
 
 HttpClient.prototype.gameStateAsJSON = function(gameState) {
-  var json = {};
-  json["board"] = gameState.board;
-  json["gameType"] = gameState.gameType;
-  if (gameState.gameType === "computerVsComputer") {
-    json["computerMarker"] = gameState.getPlayerMarker();
-  }
-  if (gameState.gameType === "humanVsComputer") {
-    if (gameState.player1.type === "computer") {
-      json["computerDifficulty"] = gameState.player1.difficulty;
-    } else {
-      json["computerDifficulty"] = gameState.player2.difficulty;
-    }
-  }
-  if (gameState.currentPlayer().type === "computer") {
-    json["computerDifficulty"] = gameState.currentPlayer().difficulty;
-  }
+  var json = gameState.getFields();
   return JSON.stringify(json);
 }
 
@@ -11937,11 +11995,11 @@ var ComputerVsPlayerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
   this.gameState = gameState;
+  this.gameState.isXTurn = true;
 }
 
 ComputerVsPlayerGame.prototype.play = function() {
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
   this.ui.enableSpots(this.gameState.board);
   this.ui.displayHumanTurn();
 }
@@ -11949,13 +12007,14 @@ ComputerVsPlayerGame.prototype.play = function() {
 ComputerVsPlayerGame.prototype.computerTurn = function() {
   this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
+  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.takeTurn = function(spotId) {
+  this.gameState.switchTurn();
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
@@ -11965,6 +12024,7 @@ ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
   if (gameState.isOver()) {
     ComputerVsPlayerGame.prototype.endGame(gameState.status, ui);
   } else {
+    gameState.switchTurn();
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
   }
@@ -11994,9 +12054,14 @@ PlayerVsComputerGame.prototype.play = function() {
 }
 
 PlayerVsComputerGame.prototype.takeTurn = function(spotId) {
-  this.ui.disableSpots(this.gameState.board);
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
+  this.gameState.switchTurn();
+  this.computerTurn();
+}
+
+PlayerVsComputerGame.prototype.computerTurn = function() {
+  this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
   this.httpClient.postUpdatedGame(PlayerVsComputerGame.prototype.endTurn, this.ui, this.gameState);
 }
@@ -12010,6 +12075,7 @@ PlayerVsComputerGame.prototype.endTurn = function(response, ui, gameState) {
   } else {
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
+    gameState.switchTurn();
   }
 }
 

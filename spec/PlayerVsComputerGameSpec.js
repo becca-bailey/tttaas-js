@@ -41,10 +41,10 @@ describe("PlayerVsComputerGame", function() {
       expect(mockClient.requestMade).toBe(true);
     });
 
-    it ("does not switch the current player at the end of a turn", function() {
+    it ("does switch the current player at the end of a turn", function() {
       game.gameState.isXTurn = true;
       game.takeTurn(1);
-      expect(game.gameState.isXTurn).toBe(true);
+      expect(game.gameState.isXTurn).toBe(false);
       expect(mockUI.statusText).toEqual("Computer is thinking...");
     });
 
