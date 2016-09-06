@@ -10,9 +10,14 @@ PlayerVsComputerGame.prototype.play = function() {
 }
 
 PlayerVsComputerGame.prototype.takeTurn = function(spotId) {
-  this.ui.disableSpots(this.gameState.board);
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
+  this.gameState.switchTurn();
+  this.computerTurn();
+}
+
+PlayerVsComputerGame.prototype.computerTurn = function() {
+  this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
   this.httpClient.postUpdatedGame(PlayerVsComputerGame.prototype.endTurn, this.ui, this.gameState);
 }
@@ -26,6 +31,7 @@ PlayerVsComputerGame.prototype.endTurn = function(response, ui, gameState) {
   } else {
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
+    gameState.switchTurn();
   }
 }
 

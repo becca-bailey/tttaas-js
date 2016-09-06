@@ -2,9 +2,12 @@ var GameState = require('../src/GameState');
 
 describe("GameState", function() {
   var gameState;
+  var initialBoard = ["", "", "", "", "", "", "", "", ""];
 
   beforeEach(function() {
-    gameState = new GameState();
+    var player1 = {type: "human"};
+    var player2 = {type: "computer", difficulty: "easy"};
+    gameState = new GameState("humanVsComputer", player1, player2);
   });
 
   it("has a board", function() {
@@ -45,5 +48,43 @@ describe("GameState", function() {
 
     gameState.updateStatus("player1Wins");
     expect(gameState.isOver()).toBe(true);
+  });
+
+  it("returns the computer difficulty", function() {
+    gameState.isXTurn = false;
+    expect(gameState.getComputerDifficulty()).toEqual("easy");
+  });
+
+  describe("getFields", function() {
+    it("returns two fields for a playerVsPlayerGame", function() {
+      var player1 = {type: "human"};
+      var player2 = {type: "human"};
+      gameState = new GameState("humanVsHuman", player1, player2);
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsHuman"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns three fields for a playerVsComputerGame", function() {
+      gameState.isXTurn = false;
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsComputer", "computerDifficulty": "easy"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns three fields for a computerVsPlayerGame", function() {
+      var player1 = {type: "computer", difficulty: "hard"};
+      var player2 = {type: "human"};
+      gameState = new GameState("humanVsComputer", player1, player2);
+      gameState.isXTurn = true;
+      var expectedFields = {"board": initialBoard, "gameType": "humanVsComputer", "computerDifficulty": "hard"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
+
+    it("returns four fields for a computerVsComputerGame", function() {
+      var player1 = {type: "computer", difficulty: "hard"};
+      var player2 = {type: "computer", difficulty: "easy"};
+      gameState = new GameState("computerVsComputer", player1, player2);
+      var expectedFields = {"board": initialBoard, "gameType": "computerVsComputer", "computerMarker": "X", "computerDifficulty": "hard"};
+      expect(gameState.getFields()).toEqual(expectedFields);
+    });
   });
 });

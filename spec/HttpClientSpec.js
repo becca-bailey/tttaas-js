@@ -36,6 +36,7 @@ var expectedJSON;
     expectedJSON.board = gameState.board;
     expectedJSON.gameType = gameState.gameType;
     expectedJSON.computerDifficulty = "hard";
+    gameState.isXTurn = false;
 
     expect(client.gameStateAsJSON(gameState)).toEqual(JSON.stringify(expectedJSON));
   });

@@ -18038,6 +18038,8 @@ GameFactory.prototype.getGame = function(player1, player2) {
 module.exports = GameFactory;
 
 },{"./GameState":46,"./games/ComputerVsComputerGame":50,"./games/ComputerVsPlayerGame":51,"./games/PlayerVsComputerGame":52,"./games/PlayerVsPlayerGame":53}],46:[function(require,module,exports){
+var $ = require('jquery');
+
 function GameState(gameType, player1, player2) {
   this.board = ["", "", "", "", "", "", "", "", ""];
   this.status = "in progress";
@@ -18075,9 +18077,38 @@ GameState.prototype.currentPlayer = function() {
   }
 }
 
+GameState.prototype.getComputerDifficulty = function() {
+  return this.currentPlayer().difficulty;
+}
+
+GameState.prototype.getAdditionalFields = function() {
+  switch (this.gameType) {
+    case "humanVsHuman":
+      return {};
+      break;
+    case "humanVsComputer":
+      return {"computerDifficulty": this.getComputerDifficulty()};
+      break;
+    case "computerVsComputer":
+      return {"computerMarker": this.getPlayerMarker(), "computerDifficulty": this.getComputerDifficulty()};
+      break;
+  }
+}
+
+GameState.prototype.getFields = function() {
+  var fields = {};
+  fields["board"] = this.board;
+  fields["gameType"] = this.gameType;
+  var additionalFields = this.getAdditionalFields();
+  $.each(additionalFields, function(key, value) {
+    fields[key] = value;
+  });
+  return fields
+}
+
 module.exports = GameState;
 
-},{}],47:[function(require,module,exports){
+},{"jquery":32}],47:[function(require,module,exports){
 var $ = require('jquery');
 var Handlebars = require('handlebars');
 
@@ -18138,22 +18169,7 @@ HttpClient.prototype.getGameStatus = function(onCompletion, ui, gameState) {
 }
 
 HttpClient.prototype.gameStateAsJSON = function(gameState) {
-  var json = {};
-  json["board"] = gameState.board;
-  json["gameType"] = gameState.gameType;
-  if (gameState.gameType === "computerVsComputer") {
-    json["computerMarker"] = gameState.getPlayerMarker();
-  }
-  if (gameState.gameType === "humanVsComputer") {
-    if (gameState.player1.type === "computer") {
-      json["computerDifficulty"] = gameState.player1.difficulty;
-    } else {
-      json["computerDifficulty"] = gameState.player2.difficulty;
-    }
-  }
-  if (gameState.currentPlayer().type === "computer") {
-    json["computerDifficulty"] = gameState.currentPlayer().difficulty;
-  }
+  var json = gameState.getFields();
   return JSON.stringify(json);
 }
 
@@ -18284,11 +18300,11 @@ var ComputerVsPlayerGame = function(httpClient, ui, gameState) {
   this.httpClient = httpClient;
   this.ui = ui;
   this.gameState = gameState;
+  this.gameState.isXTurn = true;
 }
 
 ComputerVsPlayerGame.prototype.play = function() {
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
   this.ui.enableSpots(this.gameState.board);
   this.ui.displayHumanTurn();
 }
@@ -18296,13 +18312,14 @@ ComputerVsPlayerGame.prototype.play = function() {
 ComputerVsPlayerGame.prototype.computerTurn = function() {
   this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
+  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.takeTurn = function(spotId) {
+  this.gameState.switchTurn();
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
   this.computerTurn();
-  this.httpClient.postUpdatedGame(ComputerVsPlayerGame.prototype.endTurn, this.ui, this.gameState);
 }
 
 ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
@@ -18312,6 +18329,7 @@ ComputerVsPlayerGame.prototype.endTurn = function(response, ui, gameState) {
   if (gameState.isOver()) {
     ComputerVsPlayerGame.prototype.endGame(gameState.status, ui);
   } else {
+    gameState.switchTurn();
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
   }
@@ -18341,9 +18359,14 @@ PlayerVsComputerGame.prototype.play = function() {
 }
 
 PlayerVsComputerGame.prototype.takeTurn = function(spotId) {
-  this.ui.disableSpots(this.gameState.board);
   this.gameState.board[spotId] = this.gameState.getPlayerMarker();
   this.ui.showBoard(this.gameState.board);
+  this.gameState.switchTurn();
+  this.computerTurn();
+}
+
+PlayerVsComputerGame.prototype.computerTurn = function() {
+  this.ui.disableSpots(this.gameState.board);
   this.ui.displayComputerTurn();
   this.httpClient.postUpdatedGame(PlayerVsComputerGame.prototype.endTurn, this.ui, this.gameState);
 }
@@ -18357,6 +18380,7 @@ PlayerVsComputerGame.prototype.endTurn = function(response, ui, gameState) {
   } else {
     ui.displayHumanTurn();
     ui.enableSpots(gameState.board);
+    gameState.switchTurn();
   }
 }
 
@@ -18424,7 +18448,11 @@ var TicTacToe = require('./TicTacToe');
 
 $(document).ready(function() {
   var compiler = new HandlebarsCompiler();
-  compiler.load("game", function() { compiler.load("menu", TicTacToe.prototype.main) });
+  compiler.load("game",
+    function() {
+      compiler.load("menu", TicTacToe.prototype.main)
+    }
+  );
 
   $(window).resize(function() {
     ui.setSpotHeightToWidth();
